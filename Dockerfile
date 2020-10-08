@@ -13,7 +13,7 @@ RUN apk add --no-cache nginx dos2unix tar grep sed curl \
     && chown -R www:www /var/lib/nginx \
     && chown -R www:www /www \
     && mv /tmp/nginx.conf /etc/nginx/nginx.conf \
-    && echo '<h1>riot-web failed to install</h1>' > /www/index.html
+    && echo '<h1>element-web failed to install</h1>' > /www/index.html
 
 STOPSIGNAL SIGTERM
 CMD ["/start.sh"]
