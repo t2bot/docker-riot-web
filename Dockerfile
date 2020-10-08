@@ -4,6 +4,7 @@ LABEL maintainer="Travis Ralston <travis@t2bot.io>"
 
 COPY res/start.sh /start.sh
 COPY ./res/nginx.conf /tmp/nginx.conf
+COPY ./res/config.json /tmp/config.json
 RUN apk add --no-cache nginx dos2unix tar grep sed curl \
     && dos2unix /start.sh \
     && dos2unix /etc/nginx/nginx.conf \
@@ -13,6 +14,7 @@ RUN apk add --no-cache nginx dos2unix tar grep sed curl \
     && chown -R www:www /var/lib/nginx \
     && chown -R www:www /www \
     && mv /tmp/nginx.conf /etc/nginx/nginx.conf \
+    && mv /tmp/config.json /www/config.json \
     && echo '<h1>riot-web failed to install</h1>' > /www/index.html
 
 STOPSIGNAL SIGTERM

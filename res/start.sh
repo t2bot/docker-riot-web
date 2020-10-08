@@ -2,7 +2,7 @@
 set -ex
 
 PORT=80
-RIOT_VERSION=LATEST
+ELEMENT_VERSION=LATEST
 
 function usage()
 {
@@ -11,7 +11,7 @@ function usage()
     echo "/start.sh"
     echo "\t-h --help"
     echo "\t--port=$PORT"
-    echo "\t--riot-version=$RIOT_VERSION"
+    echo "\t--riot-version=$ELEMENT_VERSION"
     echo ""
 }
 
@@ -27,7 +27,7 @@ while [ "$1" != "" ]; do
             PORT=$VALUE
             ;;
         --riot-version)
-            RIOT_VERSION=$VALUE
+            ELEMENT_VERSION=$VALUE
             ;;
         *)
             echo "ERROR: unknown parameter \"$PARAM\""
@@ -38,20 +38,21 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ "$RIOT_VERSION" = "LATEST" ]
+if [ "$ELEMENT_VERSION" = "LATEST" ]
 then
-    RIOT_VERSION=$(curl --silent "https://api.github.com/repos/vector-im/riot-web/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    ELEMENT_VERSION=$(curl --silent "https://api.github.com/repos/vector-im/element-web/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
 fi
 
-echo "Downloading riot-web $RIOT_VERSION"
+echo "Downloading element-web $ELEMENT_VERSION"
 cp /www/config.json /tmp/config.json
 cd /tmp
-wget "https://github.com/vector-im/riot-web/releases/download/$RIOT_VERSION/riot-$RIOT_VERSION.tar.gz" -O riot.tar.gz
+# https://github.com/vector-im/element-web/issues/15423
+wget "https://github.com/vector-im/element-web/releases/download/$ELEMENT_VERSION/riot-$ELEMENT_VERSION.tar.gz" -O element.tar.gz
 
-echo "Unpacking riot-web"
+echo "Unpacking element-web"
 rm -rf /www
 mkdir -p /www
-tar -zxvf riot.tar.gz --strip-components=1 -C /www
+tar -zxvf element.tar.gz --strip-components=1 -C /www
 cp /tmp/config.json /www/config.json
 
 echo "Starting nginx on port $PORT"
