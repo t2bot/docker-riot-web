@@ -47,7 +47,7 @@ echo "Downloading element-web $ELEMENT_VERSION"
 cp /www/config.json /tmp/config.json
 cd /tmp
 # https://github.com/vector-im/element-web/issues/15423
-wget "https://github.com/vector-im/element-web/releases/download/$ELEMENT_VERSION/riot-$ELEMENT_VERSION.tar.gz" -O element.tar.gz
+wget "https://github.com/vector-im/element-web/releases/download/$ELEMENT_VERSION/element-$ELEMENT_VERSION.tar.gz" -O element.tar.gz
 
 echo "Unpacking element-web"
 rm -rf /www
